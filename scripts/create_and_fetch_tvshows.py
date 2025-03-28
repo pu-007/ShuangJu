@@ -12,7 +12,7 @@ from datetime import datetime
 
 # --- 配置 ---
 # 在这里替换为你的 TMDB API Key
-TMDB_API_KEY = "YOUR_API_KEY"
+TMDB_API_KEY = os.getenv("TMDB_API_KEY", "YOUR_TMDB_API_KEY")
 # TMDB API 端点
 TMDB_API_BASE_URL = "https://api.themoviedb.org/3"
 # 图片基础 URL
