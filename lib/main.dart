@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // Import Provider
+import 'package:shuang_ju/providers/play_source_notifier.dart'; // Import PlaySourceNotifier
 import 'package:shuang_ju/providers/tv_show_notifier.dart'; // Import Notifier
 import 'package:shuang_ju/services/data_service.dart'; // Import Service
 // Import the main screen widget
@@ -16,9 +17,16 @@ void main() async { // Make main async
   await dataService.initializeDataIfNeeded(); // Corrected method name back
 
   runApp(
-    // Provide the TvShowNotifier to the widget tree
-    ChangeNotifierProvider(
-      create: (context) => TvShowNotifier(dataService)..loadTvShows(), // Create notifier and load initial data
+    // Use MultiProvider to provide multiple notifiers
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => TvShowNotifier(dataService)..loadTvShows(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PlaySourceNotifier(dataService), // Provide PlaySourceNotifier
+        ),
+      ],
       child: const MyApp(),
     ),
   );

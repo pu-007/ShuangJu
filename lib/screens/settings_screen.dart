@@ -1,12 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart'; // For potential links later
 import 'package:video_player/video_player.dart'; // For birthday video
+import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
 
 // Import screens/dialogs for editing sources
 import 'edit_sources_screen.dart'; // Import the screen
 
-class SettingsScreen extends StatelessWidget {
+// Define update frequency options
+enum UpdateFrequency { hourly, daily, weekly } // Define enum for clarity
+
+// Helper to get display string for frequency
+String _getFrequencyDisplayString(UpdateFrequency frequency) {
+  switch (frequency) {
+    case UpdateFrequency.hourly:
+      return '每小时';
+    case UpdateFrequency.daily:
+      return '每日';
+    case UpdateFrequency.weekly:
+      return '每周';
+    default:
+      return '未知';
+  }
+}
+
+// Helper to get frequency from string (for loading from prefs)
+UpdateFrequency _getFrequencyFromString(String? freqString) {
+  if (freqString == UpdateFrequency.hourly.toString()) {
+    return UpdateFrequency.hourly;
+  } else if (freqString == UpdateFrequency.weekly.toString()) {
+     return UpdateFrequency.weekly;
+  }
+  // Default to daily if null or unrecognized
+  return UpdateFrequency.daily;
+}
+
+
+class SettingsScreen extends StatefulWidget { // Convert to StatefulWidget
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> { // Create State class
+  static const String _updateFrequencyKey = 'update_frequency'; // SharedPreferences key
+  UpdateFrequency _selectedFrequency = UpdateFrequency.daily; // Default value
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUpdateFrequency(); // Load saved frequency on init
+  }
+
+  // Load saved frequency from SharedPreferences
+  Future<void> _loadUpdateFrequency() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedFrequencyString = prefs.getString(_updateFrequencyKey);
+    setState(() {
+      _selectedFrequency = _getFrequencyFromString(savedFrequencyString);
+    });
+  }
+
+  // Save selected frequency to SharedPreferences
+  Future<void> _saveUpdateFrequency(UpdateFrequency? newFrequency) async {
+    if (newFrequency == null) return; // Do nothing if null
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_updateFrequencyKey, newFrequency.toString());
+    setState(() {
+      _selectedFrequency = newFrequency;
+    });
+     // Optional: Show a confirmation SnackBar
+     // ignore: use_build_context_synchronously
+     ScaffoldMessenger.of(context).showSnackBar(
+       SnackBar(
+          content: Text('更新频率已保存为: ${_getFrequencyDisplayString(newFrequency)}'),
+          duration: const Duration(seconds: 2),
+       ),
+     );
+  }
 
   // Function to play the birthday video
   void _playBirthdayVideo(BuildContext context) async {
@@ -77,6 +149,28 @@ class SettingsScreen extends StatelessWidget {
             subtitle: const Text('管理跳转播放链接'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => _navigateToEditSources(context),
+          ),
+          const Divider(),
+          // Add Update Frequency Setting ListTile
+          ListTile(
+            leading: const Icon(Icons.update),
+            title: const Text('检查更新频率'),
+            subtitle: Text('当前: ${_getFrequencyDisplayString(_selectedFrequency)}'),
+            trailing: DropdownButton<UpdateFrequency>(
+              value: _selectedFrequency,
+              // Use enum values directly
+              items: UpdateFrequency.values.map((UpdateFrequency frequency) {
+                return DropdownMenuItem<UpdateFrequency>(
+                  value: frequency,
+                  child: Text(_getFrequencyDisplayString(frequency)),
+                );
+              }).toList(),
+              onChanged: (UpdateFrequency? newValue) {
+                 _saveUpdateFrequency(newValue); // Call save method on change
+              },
+              underline: Container(), // Hide default underline if desired
+            ),
+            // No onTap needed for the ListTile itself if using DropdownButton
           ),
           const Divider(),
           ListTile(

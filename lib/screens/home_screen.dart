@@ -3,7 +3,10 @@ import 'dart:math'; // For random selection
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // For date formatting
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
+import '../providers/play_source_notifier.dart'; // Import PlaySourceNotifier
 import '../providers/tv_show_notifier.dart';
+import '../models/play_source.dart'; // Import PlaySource model
 import '../models/tv_show.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -223,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ListTile(
             leading: const Icon(Icons.play_circle_outline),
             title: const Text('播放'),
-            onTap: () { /* TODO: Show Play Sources */ print('播放 tapped'); },
+            onTap: () => _showPlaySourcesDialog(context, _currentShow!), // Call dialog function
           ),
           const Divider(),
           // --- Progress ---
@@ -235,8 +238,48 @@ class _HomeScreenState extends State<HomeScreen> {
           LinearProgressIndicator(
              value: _currentShow!.progress.percentage,
              backgroundColor: Colors.grey[300],
+             minHeight: 6, // Make it slightly thicker
           ),
-          const SizedBox(height: 10),
+          // Add +/- buttons for progress
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.remove_circle_outline),
+                tooltip: '减少进度',
+                onPressed: (_currentShow!.progress.current <= 0) ? null : () { // Disable if already 0
+                   final current = _currentShow!.progress.current - 1;
+                   Provider.of<TvShowNotifier>(context, listen: false).updateProgress(
+                      _currentShow!,
+                      current,
+                      _currentShow!.progress.total,
+                   );
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                // Allow tapping text to manually input progress? (More complex)
+                child: Text(
+                  '${_currentShow!.progress.current} / ${_currentShow!.progress.total}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.add_circle_outline),
+                tooltip: '增加进度',
+                 onPressed: (_currentShow!.progress.current >= _currentShow!.progress.total) ? null : () { // Disable if already max
+                   final current = _currentShow!.progress.current + 1;
+                   Provider.of<TvShowNotifier>(context, listen: false).updateProgress(
+                      _currentShow!,
+                      current,
+                      _currentShow!.progress.total,
+                   );
+                 },
+              ),
+            ],
+          ),
+          // const SizedBox(height: 10), // Removed extra space before divider
+          const Divider(), // Add divider before thoughts
           // --- Thoughts ---
            Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -261,6 +304,88 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  // --- Helper method to show play sources ---
+  void _showPlaySourcesDialog(BuildContext context, TvShow show) {
+    final playSourceNotifier = Provider.of<PlaySourceNotifier>(context, listen: false);
+    final sources = playSourceNotifier.sources;
+
+    if (sources.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('没有可用的播放源')),
+      );
+      return;
+    }
+
+    showModalBottomSheet(
+      context: context,
+      // Make it scrollable if many sources
+      isScrollControlled: true,
+      builder: (BuildContext ctx) {
+        // Calculate max height for the sheet
+        final double maxHeight = MediaQuery.of(ctx).size.height * 0.6; // 60% of screen height
+
+        return ConstrainedBox(
+           constraints: BoxConstraints(maxHeight: maxHeight),
+           child: Padding(
+             padding: const EdgeInsets.all(16.0),
+             child: Column(
+               mainAxisSize: MainAxisSize.min, // Take only needed height
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 Text(
+                   '选择播放源: ${show.name}',
+                   style: Theme.of(ctx).textTheme.titleLarge,
+                 ),
+                 const Divider(height: 20),
+                 Flexible( // Make the ListView flexible within Column
+                   child: ListView.separated(
+                     shrinkWrap: true, // Important for Column/BottomSheet
+                     itemCount: sources.length,
+                     separatorBuilder: (context, index) => const Divider(height: 1),
+                     itemBuilder: (context, index) {
+                       final source = sources[index];
+                       return ListTile(
+                         title: Text(source.name),
+                         // Optional: Add subtitle with URL template?
+                         // subtitle: Text(source.urlTemplate, style: TextStyle(color: Colors.grey, fontSize: 12)),
+                         onTap: () async {
+                           final urlString = source.getUrlForTvShow(
+                             tvShowName: show.name,
+                             tmdbId: show.tmdb_id,
+                             mediaType: show.media_type,
+                           );
+                           if (urlString.isNotEmpty) {
+                             final url = Uri.parse(urlString);
+                             if (await canLaunchUrl(url)) {
+                               await launchUrl(url, mode: LaunchMode.externalApplication);
+                               // ignore: use_build_context_synchronously
+                               Navigator.pop(ctx); // Close bottom sheet on success
+                             } else {
+                               print("Could not launch $url");
+                               // ignore: use_build_context_synchronously
+                               ScaffoldMessenger.of(ctx).showSnackBar(
+                                 SnackBar(content: Text('无法打开链接: $urlString')),
+                               );
+                             }
+                           } else {
+                              print("Could not generate valid URL for ${source.name}");
+                              ScaffoldMessenger.of(ctx).showSnackBar(
+                                 SnackBar(content: Text('无法为 ${source.name} 生成有效链接')),
+                               );
+                           }
+                         },
+                       );
+                     },
+                   ),
+                 ),
+               ],
+             ),
+           ),
+        );
+      },
     );
   }
 }
