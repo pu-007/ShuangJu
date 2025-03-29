@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/foundation.dart'; // For ChangeNotifier
 import '../models/tv_show.dart';
 import '../services/data_service.dart';

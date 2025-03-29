@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, unintended_html_in_doc_comment
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'play_source.g.dart'; // Generated part file

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io'; // Import dart:io for File class
 import 'dart:math'; // For random selection
 import 'package:flutter/material.dart';
@@ -122,8 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.black.withOpacity(0.6),
-                  Colors.black.withOpacity(0.2),
+                  Colors.black.withValues(alpha: .6),
+                  Colors.black.withValues(alpha: .2),
                 ],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
@@ -226,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                  color: theme.canvasColor.withOpacity(0.95),
+                  color: theme.canvasColor.withValues(alpha: .95),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: _buildExpansionMenuItems(),
@@ -447,6 +449,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                               // ignore: use_build_context_synchronously
                               Navigator.pop(
+                                // ignore: use_build_context_synchronously
                                 ctx,
                               ); // Close bottom sheet on success
                             } else {

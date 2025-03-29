@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 // For potential links later
 import 'package:video_player/video_player.dart'; // For birthday video
@@ -18,9 +20,7 @@ String _getFrequencyDisplayString(UpdateFrequency frequency) {
       return '每日';
     case UpdateFrequency.weekly:
       return '每周';
-    default:
-      return '未知';
-  }
+    }
 }
 
 // Helper to get frequency from string (for loading from prefs)
@@ -97,6 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> { // Create State class
 
       // ignore: use_build_context_synchronously
       showDialog(
+        // ignore: use_build_context_synchronously
         context: context,
         builder: (context) => AlertDialog(
           contentPadding: EdgeInsets.zero, // Remove default padding
