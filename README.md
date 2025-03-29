@@ -75,9 +75,8 @@ Flutter (Channel stable, 3.29.2, on Microsoft Windows [版本 10.0.26100.3476], 
   "[信息]TMDB": "https://www.themoviedb.org/{media_type}/{tmdb_id}",
   "[信息]豆瓣": "https://www.douban.com/search?q={name}",
   "[网盘]甜爱路": "https://www.tianail.cn/s/{name}.html",
-  "[在线]爱壹帆": "https://www.yfsp.tv/search/{name}",
+  "[推荐]大师兄": "https://dsxys.pro/sb/kemksmaksdl7nhZe3c1-.html?wd={name}",
   "[在线]老王": "https://laowang.co/s.html?wd={name}",
-  "[在线]大师兄": "https://dsxys.pro/sb/kemksmaksdl7nhZe3c1-.html?wd={name}",
   "[在线]网飞猫": "https://www.ncat21.com/search?os=pc&k={name}",
   "[在线]黑猫影视": "https://heimaotv.vip/vod/search.html?wd={name}",
   "[港台]追剧网": "https://ztv.tw/vodsearch/-------------.html?wd={name}&submit=",
@@ -107,3 +106,13 @@ Flutter (Channel stable, 3.29.2, on Microsoft Windows [版本 10.0.26100.3476], 
    3. 其他条目暂定
 
 请用现代化的美观的 UI 实现以上功能，保证功能的完备性，灵活组织布局，用各种美观高效的组件。
+
+## TODO
+
+- [ ] 主页按固定频率更新，适配设置
+- [ ] 主页播放进度条实时更新
+- [ ] bug：数据源第一次点击没用
+- [ ] 管理页详情界面完善，添加简洁，跳转，相册、文字卡片按钮
+- [ ] 相册功能完善，更新相册高清图
+- [ ] 音乐播放按完，添加音乐
+- [ ] 视频替换为定制音乐 MV，AI 生成音乐
