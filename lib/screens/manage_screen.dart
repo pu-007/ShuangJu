@@ -22,7 +22,7 @@ class ManageScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('电视剧管理'),
+        title: const Text('爽剧'),
         // Potentially add actions like search or filter later
       ),
       body:
@@ -66,13 +66,16 @@ class ManageScreen extends StatelessWidget {
 
   // --- Helper method to show play sources (Copied from HomeScreen - Refactor later) ---
   void _showPlaySourcesDialog(BuildContext context, TvShow show) {
-    final playSourceNotifier = Provider.of<PlaySourceNotifier>(context, listen: false);
+    final playSourceNotifier = Provider.of<PlaySourceNotifier>(
+      context,
+      listen: false,
+    );
     final sources = playSourceNotifier.sources;
 
     if (sources.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('没有可用的播放源')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('没有可用的播放源')));
       return;
     }
 
@@ -83,60 +86,68 @@ class ManageScreen extends StatelessWidget {
         final double maxHeight = MediaQuery.of(ctx).size.height * 0.6;
 
         return ConstrainedBox(
-           constraints: BoxConstraints(maxHeight: maxHeight),
-           child: Padding(
-             padding: const EdgeInsets.all(16.0),
-             child: Column(
-               mainAxisSize: MainAxisSize.min,
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
-                 Text(
-                   '选择播放源: ${show.name}',
-                   style: Theme.of(ctx).textTheme.titleLarge,
-                 ),
-                 const Divider(height: 20),
-                 Flexible(
-                   child: ListView.separated(
-                     shrinkWrap: true,
-                     itemCount: sources.length,
-                     separatorBuilder: (context, index) => const Divider(height: 1),
-                     itemBuilder: (context, index) {
-                       final source = sources[index];
-                       return ListTile(
-                         title: Text(source.name),
-                         onTap: () async {
-                           final urlString = source.getUrlForTvShow(
-                             tvShowName: show.name,
-                             tmdbId: show.tmdb_id,
-                             mediaType: show.media_type,
-                           );
-                           if (urlString.isNotEmpty) {
-                             final url = Uri.parse(urlString);
-                             if (await canLaunchUrl(url)) {
-                               await launchUrl(url, mode: LaunchMode.externalApplication);
-                               // ignore: use_build_context_synchronously
-                               Navigator.pop(ctx);
-                             } else {
-                               print("Could not launch $url");
-                               // ignore: use_build_context_synchronously
-                               ScaffoldMessenger.of(ctx).showSnackBar(
-                                 SnackBar(content: Text('无法打开链接: $urlString')),
-                               );
-                             }
-                           } else {
-                              print("Could not generate valid URL for ${source.name}");
+          constraints: BoxConstraints(maxHeight: maxHeight),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '选择播放源: ${show.name}',
+                  style: Theme.of(ctx).textTheme.titleLarge,
+                ),
+                const Divider(height: 20),
+                Flexible(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: sources.length,
+                    separatorBuilder:
+                        (context, index) => const Divider(height: 1),
+                    itemBuilder: (context, index) {
+                      final source = sources[index];
+                      return ListTile(
+                        title: Text(source.name),
+                        onTap: () async {
+                          final urlString = source.getUrlForTvShow(
+                            tvShowName: show.name,
+                            tmdbId: show.tmdb_id,
+                            mediaType: show.media_type,
+                          );
+                          if (urlString.isNotEmpty) {
+                            final url = Uri.parse(urlString);
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(
+                                url,
+                                mode: LaunchMode.externalApplication,
+                              );
+                              // ignore: use_build_context_synchronously
+                              Navigator.pop(ctx);
+                            } else {
+                              print("Could not launch $url");
+                              // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(ctx).showSnackBar(
-                                 SnackBar(content: Text('无法为 ${source.name} 生成有效链接')),
-                               );
-                           }
-                         },
-                       );
-                     },
-                   ),
-                 ),
-               ],
-             ),
-           ),
+                                SnackBar(content: Text('无法打开链接: $urlString')),
+                              );
+                            }
+                          } else {
+                            print(
+                              "Could not generate valid URL for ${source.name}",
+                            );
+                            ScaffoldMessenger.of(ctx).showSnackBar(
+                              SnackBar(
+                                content: Text('无法为 ${source.name} 生成有效链接'),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
@@ -146,7 +157,8 @@ class ManageScreen extends StatelessWidget {
 // Placeholder for the TvShowCard widget
 class TvShowCardPlaceholder extends StatelessWidget {
   final TvShow tvShow;
-  final Function(BuildContext, TvShow) onPlayPressed; // Add callback function parameter
+  final Function(BuildContext, TvShow)
+  onPlayPressed; // Add callback function parameter
 
   const TvShowCardPlaceholder({
     super.key,
@@ -214,8 +226,8 @@ class TvShowCardPlaceholder extends StatelessWidget {
                   iconSize: 28, // Slightly larger icon
                   tooltip: '播放 ${tvShow.name}',
                   onPressed: () {
-                     // Call the passed callback function
-                     onPlayPressed(context, tvShow);
+                    // Call the passed callback function
+                    onPlayPressed(context, tvShow);
                   },
                 ),
               ],

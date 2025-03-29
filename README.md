@@ -119,3 +119,5 @@ Flutter (Channel stable, 3.29.2, on Microsoft Windows [版本 10.0.26100.3476], 
 - [ ] 音乐播放按完，添加音乐
 - [ ] 视频替换为定制音乐 MV，AI 生成音乐
 - [ ] 手动添加新剧、新台词、新图片，并且自动从 TMDB 获取信息
+
+THANKS TO https://yuluyao.com/

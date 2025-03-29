@@ -35,20 +35,18 @@ class _MainScreenState extends State<MainScreen> {
       // appBar: AppBar(
       //   title: const Text('ShuangJu'), // Generic title?
       // ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: '主页',
-          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.grid_view_outlined),
             activeIcon: Icon(Icons.grid_view_rounded),
             label: '管理',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
+            label: '主页',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_outlined),
