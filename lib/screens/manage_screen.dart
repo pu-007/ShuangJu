@@ -24,7 +24,7 @@ class ManageScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('爽剧'),
+        title: const Text('爽剧 - 管理'),
         // Potentially add actions like search or filter later
       ),
       body:

@@ -144,7 +144,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('设置')),
+      appBar: AppBar(title: const Text('爽剧 - 设置')),
       body: ListView(
         children: <Widget>[
           ListTile(
@@ -197,8 +197,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               showAboutDialog(
                 context: context,
                 applicationName: 'ShuangJu - 爽剧',
-                applicationVersion: '1.0.0', // TODO: Get version dynamically
-                applicationLegalese: '© 2025 为梁爽定制',
+                applicationVersion: 'v5.20.4',
+                applicationLegalese: '© 2025.5.24 为梁爽定制',
               );
             },
           ),

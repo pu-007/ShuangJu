@@ -6,7 +6,8 @@ import 'package:shuang_ju/services/data_service.dart'; // Import Service
 // Import the main screen widget
 import 'package:shuang_ju/screens/main_screen.dart'; // Uncommented import
 
-void main() async { // Make main async
+void main() async {
+  // Make main async
   // Ensure Flutter bindings are initialized before using async/await
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -24,7 +25,9 @@ void main() async { // Make main async
           create: (context) => TvShowNotifier(dataService)..loadTvShows(),
         ),
         ChangeNotifierProvider(
-          create: (context) => PlaySourceNotifier(dataService), // Provide PlaySourceNotifier
+          create:
+              (context) =>
+                  PlaySourceNotifier(dataService), // Provide PlaySourceNotifier
         ),
       ],
       child: const MyApp(),
@@ -42,7 +45,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // Define a base theme
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blueAccent, // Choose a seed color
+          seedColor: Colors.pinkAccent, // Choose a seed color
           brightness: Brightness.light, // Or Brightness.dark
         ),
         useMaterial3: true, // Enable Material 3
