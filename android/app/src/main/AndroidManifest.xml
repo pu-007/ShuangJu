@@ -2,7 +2,7 @@
     <!-- Permissions removed as we now use app-specific external storage -->
 
     <application
-        android:label="shuang_ju"
+        android:label="爽剧"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <!-- android:requestLegacyExternalStorage="true" removed -->

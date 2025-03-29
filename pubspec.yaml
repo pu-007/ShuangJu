@@ -1,5 +1,5 @@
 name: shuang_ju
-description: "A new Flutter project."
+description: "为梁爽同学十七岁生日定制的软件,收藏喜欢的电视剧剧照与台词,支持追剧日历,跳转播放,台词相册,进度记录以及个人想法."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
