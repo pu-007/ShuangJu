@@ -1,10 +1,6 @@
 import zipfile
 import os
 
-# 若压缩文件存在则删除
-
-if os.path.exists('assets/tv_shows_archive.zip'):
-    os.remove('assets/tv_shows_archive.zip')
 
 def zip_directory(src_dir, dst_zip):
     """
@@ -23,6 +19,9 @@ def zip_directory(src_dir, dst_zip):
                 zipf.write(file_path, rel_path)
 
 if __name__ == "__main__":
+    # 若压缩文件存在则删除
+    if os.path.exists('assets/tv_shows_archive.zip'):
+        os.remove('assets/tv_shows_archive.zip')
     # 定义路径（使用os.path保证跨平台兼容性）
     src_dir = os.path.join('assets', 'tv_shows')
     dst_zip = os.path.join('assets', 'tv_shows_archive.zip')
