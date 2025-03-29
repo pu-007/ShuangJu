@@ -6,40 +6,40 @@
 
 **开发计划**:
 
-1.  **项目初始化与环境配置 (Setup)**
-    *   编辑 `pubspec.yaml`: 添加依赖 (`provider`/`riverpod`, `json_serializable`/`build_runner`, `path_provider`, `url_launcher`, `audioplayers`, `flutter_staggered_grid_view`, `photo_view`, `intl`, `video_player`) 并声明 `assets`。
-    *   运行 `flutter pub get`。
-    *   配置 `build_runner`。
+1. **项目初始化与环境配置 (Setup)**
+    * 编辑 `pubspec.yaml`: 添加依赖 (`provider`/`riverpod`, `json_serializable`/`build_runner`, `path_provider`, `url_launcher`, `audioplayers`, `flutter_staggered_grid_view`, `photo_view`, `intl`, `video_player`) 并声明 `assets`。
+    * 运行 `flutter pub get`。
+    * 配置 `build_runner`。
 
-2.  **数据模型定义 (Data Models)**
-    *   创建 `TvShow`, `Progress`, `PlaySource` 类。
-    *   使用 `@JsonSerializable()` 生成解析代码。
+2. **数据模型定义 (Data Models)**
+    * 创建 `TvShow`, `Progress`, `PlaySource` 类。
+    * 使用 `@JsonSerializable()` 生成解析代码。
 
-3.  **数据处理与持久化 (Data Handling & Persistence)**
-    *   实现首次启动时复制 `assets` 数据到可写目录。
-    *   创建 `DataService` 用于加载和保存 `TvShow` 和 `PlaySource` 数据到可写目录。
+3. **数据处理与持久化 (Data Handling & Persistence)**
+    * 实现首次启动时复制 `assets` 数据到可写目录。
+    * 创建 `DataService` 用于加载和保存 `TvShow` 和 `PlaySource` 数据到可写目录。
 
-4.  **状态管理 (State Management)**
-    *   配置 `Provider` 或 `Riverpod`。
-    *   创建 `Notifier` 类管理应用状态 (电视剧列表、主页状态、播放器、设置)。
+4. **状态管理 (State Management)**
+    * 配置 `Provider` 或 `Riverpod`。
+    * 创建 `Notifier` 类管理应用状态 (电视剧列表、主页状态、播放器、设置)。
 
-5.  **UI 界面实现 (UI Implementation)**
-    *   **基础结构**: `main.dart` 设置 `MaterialApp` 和底部导航栏 (`BottomNavigationBar`)。
-    *   **主页 (`HomeScreen`)**: 日历视图、随机背景/台词、折叠菜单 (切换、相册、音乐、播放、进度、想法)。
-    *   **管理页 (`ManageScreen`)**: 瀑布流布局 (`flutter_staggered_grid_view`) 显示电视剧卡片 (封面、名称、按钮、进度)、剧照、台词卡片，支持图片叠加文字和点击查看大图 (`photo_view`)。
-    *   **设置页 (`SettingsScreen`)**: 编辑数据源条目 (导航到 `EditSourcesScreen`)、播放生日祝福条目 (使用 `video_player`)。
+5. **UI 界面实现 (UI Implementation)**
+    * **基础结构**: `main.dart` 设置 `MaterialApp` 和底部导航栏 (`BottomNavigationBar`)。
+    * **主页 (`HomeScreen`)**: 日历视图、随机背景/台词、折叠菜单 (切换、相册、音乐、播放、进度、想法)。
+    * **管理页 (`ManageScreen`)**: 瀑布流布局 (`flutter_staggered_grid_view`) 显示电视剧卡片 (封面、名称、按钮、进度)、剧照、台词卡片，支持图片叠加文字和点击查看大图 (`photo_view`)。
+    * **设置页 (`SettingsScreen`)**: 编辑数据源条目 (导航到 `EditSourcesScreen`)、播放生日祝福条目 (使用 `video_player`)。
 
-6.  **功能模块实现 (Feature Implementation)**
-    *   图片加载 (`Image.asset`)。
-    *   音乐播放 (`audioplayers`)。
-    *   跳转播放 (`url_launcher`)。
-    *   想法记录 (文本列表)。
+6. **功能模块实现 (Feature Implementation)**
+    * 图片加载 (`Image.asset`)。
+    * 音乐播放 (`audioplayers`)。
+    * 跳转播放 (`url_launcher`)。
+    * 想法记录 (文本列表)。
 
-7.  **UI/UX 优化 (UI/UX Polish)**
-    *   统一 `ThemeData`。
-    *   添加动画和加载指示器。
-    *   适配目标设备。
-    *   测试和 Bug 修复。
+7. **UI/UX 优化 (UI/UX Polish)**
+    * 统一 `ThemeData`。
+    * 添加动画和加载指示器。
+    * 适配目标设备。
+    * 测试和 Bug 修复。
 
 **Mermaid 图示 (简化流程)**
 
@@ -82,3 +82,4 @@ graph TD
 
     N --> E;
     T --> E;
+```

@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Permissions removed as we now use app-specific external storage -->
+
     <application
         android:label="shuang_ju"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- android:requestLegacyExternalStorage="true" removed -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
