@@ -4,6 +4,7 @@
 #     "Pillow", # For image processing
 # ]
 # ///
+from datetime import datetime
 import os
 import json
 import argparse
@@ -73,12 +74,31 @@ def get_target_shows(base_path, specified_names=None, exclude=False):
         return target_dirs
 
 def sanitize_filename(name):
-    """Removes or replaces characters unsafe for filenames."""
-    # Basic sanitization, can be expanded
-    # Replace common problematic chars, remove others
-    name = name.replace(':', '-').replace('/', '-').replace('\\', '-')
-    safe_chars = set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_()')
-    return "".join(c for c in name if c in safe_chars).strip()
+    """Removes or replaces characters unsafe for filenames, preserving Unicode."""
+    # Replace potentially problematic separators first
+    name = name.replace(':', ' - ').replace('/', '_').replace('\\', '_')
+
+    # Define characters explicitly forbidden in Windows filenames
+    # (excluding / and \ which were already replaced)
+    # Also remove control characters (ASCII 0-31)
+    forbidden_chars = set('<>"|?*') | set(chr(i) for i in range(32))
+
+    # Remove forbidden characters
+    sanitized = "".join(c for c in name if c not in forbidden_chars)
+
+    # Replace multiple spaces/hyphens with single ones (optional, for tidiness)
+    sanitized = ' '.join(sanitized.split())
+    sanitized = '-'.join(filter(None, sanitized.split('-'))) # Filter removes empty strings from split
+
+    # Remove leading/trailing whitespace/dots/hyphens
+    sanitized = sanitized.strip(' .-')
+
+    # Ensure the name is not empty after sanitization
+    if not sanitized:
+        logging.warning(f"Sanitization resulted in an empty filename for original name: '{name}'. Using 'default_name'.")
+        return "default_name" # Provide a fallback
+
+    return sanitized
 
 
 # --- Core Functions ---
@@ -170,7 +190,7 @@ def rename_and_convert_images(show_dir_path):
     skipped_count = 0
 
     for index, old_path in enumerate(image_files):
-        new_filename = f"{safe_show_name}-{index + 1}.jpg"
+        new_filename = f"{safe_show_name}-{datetime.now().strftime('%Y%m%d%H%M%S%f')}-{index + 1}.jpg"
         new_path = show_dir_path / new_filename
         old_ext = old_path.suffix.lower()
 
