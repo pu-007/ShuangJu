@@ -1,6 +1,11 @@
 import zipfile
 import os
 
+# 若压缩文件存在则删除
+
+if os.path.exists('assets/tv_shows_archive.zip'):
+    os.remove('assets/tv_shows_archive.zip')
+
 def zip_directory(src_dir, dst_zip):
     """
     将源目录递归压缩到ZIP文件，确保中文文件名使用UTF-8编码

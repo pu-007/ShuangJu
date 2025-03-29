@@ -58,7 +58,7 @@ Flutter (Channel stable, 3.29.2, on Microsoft Windows [版本 10.0.26100.3476], 
     "我要我们在一起-20250329091519489936-1.jpg": "这世界那么多人,多幸运,我有个我们"
   },
   // 类型
-  "media_type": "moive",
+  "media_type": "movie",
   // 个人想法
   "thoughts": [],
   // 别名
