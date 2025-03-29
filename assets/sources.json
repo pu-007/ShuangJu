@@ -1,5 +1,5 @@
 {
-  "[信息]TMDB": "https://www.themoviedb.org/search?query={name}",
+  "[信息]TMDB": "https://www.themoviedb.org/{media_type}/{tmdb_id}",
   "[信息]豆瓣": "https://www.douban.com/search?q={name}",
   "[网盘]甜爱路": "https://www.tianail.cn/s/{name}.html",
   "[在线]爱壹帆": "https://www.yfsp.tv/search/{name}",
