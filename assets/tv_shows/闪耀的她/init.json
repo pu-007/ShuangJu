@@ -6,5 +6,8 @@
     "total": 32
   },
   "favorite": false,
-  "lines": {}
+  "lines": [],
+  "tmdb_id": 228996,
+  "media_type": "tv",
+  "thoughts": []
 }
