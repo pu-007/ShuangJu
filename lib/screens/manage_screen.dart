@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/tv_show_notifier.dart';
 import '../providers/play_source_notifier.dart'; // Import PlaySourceNotifier
 import '../models/tv_show.dart';
-import '../models/play_source.dart'; // Import PlaySource model
+// Import PlaySource model
 import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
 // Import the detail screen
 import 'tv_show_detail_screen.dart';

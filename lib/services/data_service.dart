@@ -65,16 +65,19 @@ class DataService {
 
     // Initialize if sources.json doesn't exist OR tv_shows dir doesn't exist OR tv_shows dir is empty
     if (!sourcesExist || !tvShowsExist || tvShowsIsEmpty) {
-      if (!sourcesExist)
+      if (!sourcesExist) {
         print("[DataService] Writable sources.json (internal) not found.");
-      if (!tvShowsExist)
+      }
+      if (!tvShowsExist) {
         print(
           "[DataService] Writable tv_shows directory (external files) not found.",
         );
-      if (tvShowsExist && tvShowsIsEmpty)
+      }
+      if (tvShowsExist && tvShowsIsEmpty) {
         print(
           "[DataService] Writable tv_shows directory (external files) is empty.",
         );
+      }
       print("[DataService] Initializing data from assets...");
       await _copyAssetsToWritableDir(); // This copies sources and extracts zip
       print("[DataService] Data initialization complete.");
