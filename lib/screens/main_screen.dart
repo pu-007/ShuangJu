@@ -12,13 +12,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0; // Index for the selected tab
+  int _selectedIndex = 1; // Index for the selected tab
 
   // List of widgets to display for each tab
   // Replace Placeholder widgets with actual screen widgets later
   static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(), // Use the actual HomeScreen
     ManageScreen(), // Use the actual ManageScreen
+    HomeScreen(), // Use the actual HomeScreen
     SettingsScreen(), // Use the actual SettingsScreen
   ];
 
