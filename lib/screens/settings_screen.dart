@@ -20,7 +20,7 @@ String _getFrequencyDisplayString(UpdateFrequency frequency) {
       return '每日';
     case UpdateFrequency.weekly:
       return '每周';
-    }
+  }
 }
 
 // Helper to get frequency from string (for loading from prefs)
@@ -28,22 +28,24 @@ UpdateFrequency _getFrequencyFromString(String? freqString) {
   if (freqString == UpdateFrequency.hourly.toString()) {
     return UpdateFrequency.hourly;
   } else if (freqString == UpdateFrequency.weekly.toString()) {
-     return UpdateFrequency.weekly;
+    return UpdateFrequency.weekly;
   }
   // Default to daily if null or unrecognized
   return UpdateFrequency.daily;
 }
 
-
-class SettingsScreen extends StatefulWidget { // Convert to StatefulWidget
+class SettingsScreen extends StatefulWidget {
+  // Convert to StatefulWidget
   const SettingsScreen({super.key});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> { // Create State class
-  static const String _updateFrequencyKey = 'update_frequency'; // SharedPreferences key
+class _SettingsScreenState extends State<SettingsScreen> {
+  // Create State class
+  static const String _updateFrequencyKey =
+      'update_frequency'; // SharedPreferences key
   UpdateFrequency _selectedFrequency = UpdateFrequency.daily; // Default value
 
   @override
@@ -70,14 +72,14 @@ class _SettingsScreenState extends State<SettingsScreen> { // Create State class
     setState(() {
       _selectedFrequency = newFrequency;
     });
-     // Optional: Show a confirmation SnackBar
-     // ignore: use_build_context_synchronously
-     ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
-          content: Text('更新频率已保存为: ${_getFrequencyDisplayString(newFrequency)}'),
-          duration: const Duration(seconds: 2),
-       ),
-     );
+    // Optional: Show a confirmation SnackBar
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('更新频率已保存为: ${_getFrequencyDisplayString(newFrequency)}'),
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
   // Function to play the birthday video
@@ -88,7 +90,9 @@ class _SettingsScreenState extends State<SettingsScreen> { // Create State class
 
     // Let's create a simple dialog showing the video for now.
     // NOTE: This requires the video_player package.
-    final videoPlayerController = VideoPlayerController.asset('assets/birthday_mv.mp4');
+    final videoPlayerController = VideoPlayerController.asset(
+      'assets/birthday_mv.mp4',
+    );
 
     try {
       await videoPlayerController.initialize();
@@ -99,49 +103,48 @@ class _SettingsScreenState extends State<SettingsScreen> { // Create State class
       showDialog(
         // ignore: use_build_context_synchronously
         context: context,
-        builder: (context) => AlertDialog(
-          contentPadding: EdgeInsets.zero, // Remove default padding
-          content: AspectRatio(
-            aspectRatio: videoPlayerController.value.aspectRatio,
-            child: VideoPlayer(videoPlayerController),
-          ),
-          actions: [
-            TextButton(
-              child: const Text('关闭'),
-              onPressed: () {
-                videoPlayerController.dispose(); // Stop and release resources
-                Navigator.of(context).pop();
-              },
+        builder:
+            (context) => AlertDialog(
+              contentPadding: EdgeInsets.zero, // Remove default padding
+              content: AspectRatio(
+                aspectRatio: videoPlayerController.value.aspectRatio,
+                child: VideoPlayer(videoPlayerController),
+              ),
+              actions: [
+                TextButton(
+                  child: const Text('关闭'),
+                  onPressed: () {
+                    videoPlayerController
+                        .dispose(); // Stop and release resources
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
         // Ensure controller is disposed when dialog is dismissed externally
       ).then((_) => videoPlayerController.dispose());
-
     } catch (e) {
-       print("Error playing birthday video: $e");
-       // ignore: use_build_context_synchronously
-       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('无法播放生日祝福视频: $e')),
-       );
+      print("Error playing birthday video: $e");
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(
+        // ignore: use_build_context_synchronously
+        context,
+      ).showSnackBar(SnackBar(content: Text('无法播放生日祝福视频: $e')));
     }
   }
 
   // Function to navigate to edit sources screen
   void _navigateToEditSources(BuildContext context) {
-     Navigator.push(
-       context,
-       MaterialPageRoute(builder: (context) => const EditSourcesScreen()),
-     );
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const EditSourcesScreen()),
+    );
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('设置'),
-      ),
+      appBar: AppBar(title: const Text('设置')),
       body: ListView(
         children: <Widget>[
           ListTile(
@@ -156,18 +159,21 @@ class _SettingsScreenState extends State<SettingsScreen> { // Create State class
           ListTile(
             leading: const Icon(Icons.update),
             title: const Text('检查更新频率'),
-            subtitle: Text('当前: ${_getFrequencyDisplayString(_selectedFrequency)}'),
+            subtitle: Text(
+              '当前: ${_getFrequencyDisplayString(_selectedFrequency)}',
+            ),
             trailing: DropdownButton<UpdateFrequency>(
               value: _selectedFrequency,
               // Use enum values directly
-              items: UpdateFrequency.values.map((UpdateFrequency frequency) {
-                return DropdownMenuItem<UpdateFrequency>(
-                  value: frequency,
-                  child: Text(_getFrequencyDisplayString(frequency)),
-                );
-              }).toList(),
+              items:
+                  UpdateFrequency.values.map((UpdateFrequency frequency) {
+                    return DropdownMenuItem<UpdateFrequency>(
+                      value: frequency,
+                      child: Text(_getFrequencyDisplayString(frequency)),
+                    );
+                  }).toList(),
               onChanged: (UpdateFrequency? newValue) {
-                 _saveUpdateFrequency(newValue); // Call save method on change
+                _saveUpdateFrequency(newValue); // Call save method on change
               },
               underline: Container(), // Hide default underline if desired
             ),
@@ -184,18 +190,18 @@ class _SettingsScreenState extends State<SettingsScreen> { // Create State class
           const Divider(),
           // Add more settings items here if needed
           // Example: About section
-          // ListTile(
-          //   leading: const Icon(Icons.info_outline),
-          //   title: const Text('关于应用'),
-          //   onTap: () {
-          //     showAboutDialog(
-          //       context: context,
-          //       applicationName: 'ShuangJu - 爽剧',
-          //       applicationVersion: '1.0.0', // TODO: Get version dynamically
-          //       applicationLegalese: '© 2025 为梁爽定制',
-          //     );
-          //   },
-          // ),
+          ListTile(
+            leading: const Icon(Icons.info_outline),
+            title: const Text('关于应用'),
+            onTap: () {
+              showAboutDialog(
+                context: context,
+                applicationName: 'ShuangJu - 爽剧',
+                applicationVersion: '1.0.0', // TODO: Get version dynamically
+                applicationLegalese: '© 2025 为梁爽定制',
+              );
+            },
+          ),
         ],
       ),
     );
