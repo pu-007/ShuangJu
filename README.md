@@ -13,10 +13,12 @@
 
 ## 技术栈
 
+```text
 Flutter (Channel stable, 3.29.2, on Microsoft Windows [版本 10.0.26100.3476], locale zh-CN)
 • Flutter version 3.29.2 on channel stable at C:\Users\zion\Apps\Flutter\flutter
 • Dart version 3.7.2
 • DevTools version 2.42.3
+```
 
 ## 设计要求
 
@@ -116,3 +118,4 @@ Flutter (Channel stable, 3.29.2, on Microsoft Windows [版本 10.0.26100.3476], 
 - [ ] 相册功能完善，更新相册高清图
 - [ ] 音乐播放按完，添加音乐
 - [ ] 视频替换为定制音乐 MV，AI 生成音乐
+- [ ] 手动添加新剧、新台词、新图片，并且自动从 TMDB 获取信息
