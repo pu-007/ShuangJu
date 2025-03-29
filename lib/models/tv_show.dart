@@ -95,11 +95,11 @@ class TvShow {
 
   /// 获取封面图片路径
   /// Assumes directoryPath is non-null when called.
-  String get coverImagePath => '$directoryPath!/cover.jpg';
+  String get coverImagePath => '$directoryPath/cover.jpg';
 
   /// 获取主题曲路径
   /// Assumes directoryPath is non-null when called.
-  String get themeSongPath => '$directoryPath!/themesong.mp3'; // 使用确认后的正确文件名
+  String get themeSongPath => '$directoryPath/themesong.mp3'; // 使用确认后的正确文件名
 
   @override
   String toString() {

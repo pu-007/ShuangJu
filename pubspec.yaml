@@ -66,6 +66,9 @@ dependencies:
   archive: ^3.5.1 # Re-added archive dependency
   # permission_handler: ^11.3.1 # Removed permission handler
 
+  # GBK Encoding Support (for zip filenames)
+  # gbk_codec: ^0.4.0 # Removed gbk_codec
+
 
 dev_dependencies:
   flutter_test:

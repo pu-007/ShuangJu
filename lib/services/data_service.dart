@@ -5,6 +5,7 @@ import 'package:flutter/services.dart'
 import 'package:path_provider/path_provider.dart'; // Reverted alias
 import 'package:path/path.dart' as p;
 import 'package:archive/archive.dart'; // Re-import archive package
+// Removed: import 'package:gbk_codec/gbk_codec.dart';
 // Removed: import 'package:permission_handler/permission_handler.dart';
 
 import '../models/tv_show.dart';
@@ -24,9 +25,10 @@ class DataService {
     // Use getExternalStorageDirectories (plural 'Storage') to get a list of potential directories
     // This directory is automatically managed by the OS (cleared on uninstall)
     // and doesn't require special permissions on most Android versions.
-    final List<Directory>? directories = await getExternalStorageDirectories(); // Call without arguments
+    final List<Directory>? directories =
+        await getExternalStorageDirectories(); // Call without arguments
     if (directories == null || directories.isEmpty) {
-       throw Exception("无法获取应用专属外部存储目录列表。");
+      throw Exception("无法获取应用专属外部存储目录列表。");
     }
     // Use the first directory in the list (usually the primary external storage)
     final Directory directory = directories.first;
@@ -113,7 +115,8 @@ class DataService {
         data.offsetInBytes,
         data.lengthInBytes,
       );
-      print("[DataService] Decoding zip archive...");
+      print("[DataService] Decoding zip archive..."); // Reverted log
+      // Reverted call - assuming UTF-8 filenames in zip
       final archive = ZipDecoder().decodeBytes(bytes);
       print("[DataService] Zip decoded. Found ${archive.length} files/dirs.");
 
@@ -226,6 +229,21 @@ class DataService {
               final tvShow = TvShow.fromJson(jsonMap);
               // Set the correct directoryPath pointing to external files dir
               final tvShowWithDir = tvShow.copyWith(directoryPath: showDirPath);
+
+              // --- Add check for cover and theme song ---
+              final coverPath = tvShowWithDir.coverImagePath;
+              final songPath = tvShowWithDir.themeSongPath;
+              final coverExists = await File(coverPath).exists();
+              final songExists = await File(songPath).exists();
+
+              if (!coverExists) {
+                print("Warning: Cover image not found at $coverPath");
+              }
+              if (!songExists) {
+                print("Warning: Theme song not found at $songPath");
+              }
+              // --- End check ---
+
               tvShows.add(tvShowWithDir);
             } catch (e) {
               print("Error parsing init.json in $showDirPath: $e");
