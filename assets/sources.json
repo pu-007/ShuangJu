@@ -1,0 +1,15 @@
+{
+  "[信息]TMDB": "https://www.themoviedb.org/{media_type}/{tmdb_id}",
+  "[官方]腾讯": "https://v.qq.com/x/search/?q={name}&queryFrom=0",
+  "[官方]芒果": "https://so.mgtv.com/so?k={name}",
+  "[官方]哔哩哔哩": "https://search.bilibili.com/all?keyword={name}",
+  "[聚合]甜爱路": "https://www.tianail.cn/s/{name}.html",
+  "[聚合]影猫": "https://ymck.pro/search.html?wd={name}",
+  "[聚合]雨露均沾": "https://ylu.cc/so.php?wd={name}",
+  "[在线]可可影视": "https://www.keke5.app/search?os=pc&k={name}",
+  "[在线]网飞猫": "https://www.ncat21.com/search?os=pc&k={name}",
+  "[在线]黑猫影视": "https://heimaotv.vip/vod/search.html?wd={name}",
+  "[谨慎]大师兄": "https://dsxys.pro/sb/kemksmaksdl7nhZe3c1-.html?wd={name}",
+  "[谨慎]追剧网": "https://ztv.tw/vodsearch/-------------.html?wd={name}&submit=",
+  "[谨慎]脉脉": "https://momovod.app/search.html?wd={name}&submit="
+}
