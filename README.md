@@ -1,5 +1,7 @@
 # ShuangJu - Enjoy TV Dramas 🎬
 
+[English] [[简体中文](https://github.com/pu-007/ShuangJu/blob/main/README.zh.md)]
+
 A personalized management app designed for TV drama enthusiasts. Easily collect your favorite TV drama stills, classic lines, track viewing progress, and record your unique thoughts.
 
 ## 📸 **Screenshots**

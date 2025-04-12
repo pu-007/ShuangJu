@@ -1,5 +1,7 @@
 # ShuangJu - 爽剧 🎬
 
+[[English](https://github.com/pu-007/ShuangJu/blob/main/README.md)] [简体中文]
+
 一款专为电视剧爱好者设计的个性化管理应用，轻松收藏您喜爱的电视剧剧照、经典台词，追踪观看进度，并记录您的独特想法。
 
 ## 📸 **截图**
