@@ -13,12 +13,12 @@ A personalized management app designed for TV drama enthusiasts. Easily collect 
       <p>Home</p>
     </td>
     <td style="text-align: center;">
-      <img src="docs/img-2.jpg" alt="Details" width="200">
-      <p>Details</p>
+      <img src="docs/img-2.jpg" alt="Management" width="200">
+      <p>Management</p>
     </td>
     <td style="text-align: center;">
-      <img src="docs/img-3.jpg" alt="Management" width="200">
-      <p>Management</p>
+      <img src="docs/img-3.jpg" alt="Details" width="200">
+      <p>Details</p>
     </td>
   </tr>
 </table>

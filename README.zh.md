@@ -13,12 +13,12 @@
       <p>主页</p>
     </td>
     <td style="text-align: center;">
-      <img src="docs/img-2.jpg" alt="详情" width="200">
-      <p>详情</p>
+      <img src="docs/img-2.jpg" alt="管理" width="200">
+      <p>管理</p>
     </td>
     <td style="text-align: center;">
-      <img src="docs/img-3.jpg" alt="管理" width="200">
-      <p>管理</p>
+      <img src="docs/img-3.jpg" alt="详情" width="200">
+      <p>详情</p>
     </td>
   </tr>
 </table>
